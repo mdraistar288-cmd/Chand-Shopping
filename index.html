@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Chand Shopping — everyday shopping for fashion, electronics, home essentials and more.">
+<title>Chand Shopping — All-in-One Shopping</title>
+<style>
+:root{--ink:#172033;--muted:#667085;--brand:#5b45e6;--brand2:#8b5cf6;--bg:#f7f8fc;--line:#e8eaf2;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.topline{background:#17152c;color:#fff;text-align:center;padding:9px 12px;font-size:12px;letter-spacing:.2px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:18px}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--brand)}
+.search{flex:1;display:flex;background:#f4f5fb;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.search input{border:0;background:transparent;padding:12px 14px;outline:none;min-width:0;width:100%;font-size:14px}.search button,.btn{border:0;background:var(--brand);color:#fff;padding:12px 17px;font-weight:750;border-radius:10px;cursor:pointer}
+.cart{background:#f0edff;color:#4c37c9;border:0;border-radius:12px;padding:11px 13px;font-weight:800;white-space:nowrap;cursor:pointer}
+.owner-mini{width:42px;height:42px;object-fit:cover;object-position:center 25%;border-radius:50%;border:2px solid #e2dcff}
+main{max-width:1180px;margin:auto;padding:22px 20px 50px}
+.hero{display:grid;grid-template-columns:1.12fr .88fr;gap:24px;background:linear-gradient(120deg,#17152c,#30276c 58%,#5b45e6);color:white;border-radius:24px;overflow:hidden;min-height:360px}
+.hero-copy{padding:38px 34px;align-self:center}.eyebrow{font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase;color:#c9c2ff}
+h1{font-size:clamp(32px,4.5vw,54px);line-height:1.06;letter-spacing:-1.8px;margin:14px 0}.hero p{line-height:1.7;color:#e5e2ff;max-width:470px}
+.hero .btn{background:#fff;color:#30276c;margin-top:9px;padding:13px 18px}
+.hero-photo{position:relative;min-height:320px;background:#e9a76f;overflow:hidden}
+.hero-photo img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center 27%}
+.photo-tag{position:absolute;left:18px;bottom:18px;background:#fff;color:#17152c;padding:10px 14px;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 8px 25px #0002}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:30px 0 16px}.section-head h2{font-size:23px;margin:0;letter-spacing:-.5px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.category{background:#fff;border:1px solid var(--line);padding:17px 8px;border-radius:15px;text-align:center;cursor:pointer;transition:.15s}
+.category:hover,.category.active{border-color:#b8adff;background:#f1efff;transform:translateY(-2px)}
+.category .emoji{font-size:25px;display:block;margin-bottom:8px}.category span:last-child{font-size:12px;font-weight:750}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.product{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;display:flex;flex-direction:column}
+.product-art{height:155px;display:grid;place-items:center;font-size:58px;background:linear-gradient(135deg,#f2efff,#f8f9ff)}
+.product-body{padding:14px;display:flex;flex-direction:column;flex:1}.product-category{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--brand);font-weight:850}
+.product h3{font-size:14px;margin:7px 0 6px}.desc{font-size:12px;color:var(--muted);margin:0 0 12px}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}.price{font-size:17px;font-weight:900}.add{border:0;background:#eeeaff;color:#4c37c9;padding:9px 11px;border-radius:9px;font-weight:800;cursor:pointer}.add:hover{background:var(--brand);color:white}
+.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--muted);background:#fff;border-radius:15px}
+footer{background:#17152c;color:#fff;padding:28px 20px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#c7c4df;font-size:12px;margin:7px 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#17152c;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px #0003;display:none;z-index:10;font-size:13px}
+.cart-panel{position:fixed;right:16px;top:82px;width:min(360px,calc(100vw - 32px));background:white;border:1px solid var(--line);box-shadow:0 18px 60px #17152c25;border-radius:16px;padding:18px;z-index:8;display:none}
+.cart-panel h3{margin:0 0 12px}.cart-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.cart-total{display:flex;justify-content:space-between;font-weight:900;margin:14px 0}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:18px}
+@media(max-width:800px){.nav{gap:10px;flex-wrap:wrap}.logo{font-size:22px}.search{order:5;flex-basis:100%}.owner-mini{margin-left:auto}.hero{grid-template-columns:1fr}.hero-copy{padding:28px 24px 8px}.hero-photo{min-height:260px}.categories{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){main{padding:15px 12px 35px}.nav{padding:12px}.hero{border-radius:18px}.hero-copy{padding:24px 18px 5px}.hero-photo{min-height:220px}.products{gap:10px}.product-art{height:120px;font-size:45px}.product-body{padding:11px}.price{font-size:15px}.cart{padding:10px}.section-head h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="topline">WELCOME TO CHAND SHOPPING · EVERYDAY FINDS, ONE PLACE</div>
+<header>
+  <div class="nav">
+    <a class="logo" href="#" aria-label="Chand Shopping home">Chand<span> Shopping</span></a>
+    <form class="search" id="searchForm">
+      <input id="searchInput" type="search" placeholder="Search products, e.g. headphones..." aria-label="Search products">
+      <button type="submit">Search</button>
+    </form>
+    <button class="cart" id="cartButton" aria-expanded="false">🛒 Cart <span id="cartCount">0</span></button>
+    <img class="owner-mini" src="assets/chand-photo.png" alt="Chand Shopping owner" title="Chand Shopping owner">
+  </div>
+</header>
+<div class="cart-panel" id="cartPanel">
+  <h3>Your Cart</h3><div id="cartItems"><p class="desc">Your cart is empty.</p></div>
+  <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+  <button class="btn" style="width:100%" id="checkoutButton">Continue to checkout</button>
+  <p class="note">Demo only: checkout and real payments are not connected yet.</p>
+</div>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Chand's all-in-one store</div>
+      <h1>Good finds.<br>Better everyday.</h1>
+      <p>Fashion, electronics, home essentials and more — explore everyday favourites at Chand Shopping.</p>
+      <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Explore products ↘</button>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/chand-photo.png" alt="Chand Shopping owner original photo">
+      <div class="photo-tag">Meet Chand</div>
+    </div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Shop by category</h2><p>Find what you need, all in one place.</p></div></div>
+    <div class="categories" id="categories">
+      <button class="category active" data-category="All"><span class="emoji">✨</span><span>All items</span></button>
+      <button class="category" data-category="Fashion"><span class="emoji">👕</span><span>Fashion</span></button>
+      <button class="category" data-category="Electronics"><span class="emoji">🎧</span><span>Electronics</span></button>
+      <button class="category" data-category="Footwear"><span class="emoji">👟</span><span>Footwear</span></button>
+      <button class="category" data-category="Home"><span class="emoji">🏠</span><span>Home</span></button>
+      <button class="category" data-category="Accessories"><span class="emoji">⌚</span><span>Accessories</span></button>
+    </div>
+  </section>
+  <section id="shop">
+    <div class="section-head"><div><h2>Popular picks</h2><p>Sample products — replace these with your real inventory.</p></div></div>
+    <div class="products" id="products"></div>
+  </section>
+  <p class="note">Important: this is a front-end demo. Sample items, cart and search work in this page, but real orders, stock management, delivery, online payments and Google search listing require additional setup. Keep the original photo file in the <code>assets</code> folder.</p>
+</main>
+<footer><div class="foot"><div><div class="logo">Chand<span> Shopping</span></div><p>Everything you love, in one place.</p></div><div><strong>Customer support</strong><p>Add your business email and phone here before launch.</p></div><div><strong>© Chand Shopping</strong><p>Built for your next big idea.</p></div></div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const items=[
+{id:1,name:"Everyday Cotton T-Shirt",category:"Fashion",price:499,emoji:"👕",desc:"Comfortable daily wear"},
+{id:2,name:"Wireless Headphones",category:"Electronics",price:1299,emoji:"🎧",desc:"Your music, your moment"},
+{id:3,name:"Casual Sneakers",category:"Footwear",price:1599,emoji:"👟",desc:"Made for everyday moves"},
+{id:4,name:"Minimal Wrist Watch",category:"Accessories",price:899,emoji:"⌚",desc:"A clean everyday style"},
+{id:5,name:"Desk Lamp",category:"Home",price:699,emoji:"💡",desc:"A little light for your space"},
+{id:6,name:"Travel Backpack",category:"Accessories",price:1099,emoji:"🎒",desc:"Ready for your next trip"},
+{id:7,name:"Smartphone Stand",category:"Electronics",price:299,emoji:"📱",desc:"A handy desk essential"},
+{id:8,name:"Decor Cushion",category:"Home",price:399,emoji:"🛋️",desc:"A cosy touch for home"}
+];
+let activeCategory="All",query="",cart={};
+const money=n=>"₹"+n.toLocaleString("en-IN");
+function renderProducts(){
+ const filtered=items.filter(p=>(activeCategory==="All"||p.category===activeCategory)&&(p.name+" "+p.category+" "+p.desc).toLowerCase().includes(query.toLowerCase()));
+ const el=document.getElementById("products");
+ if(!filtered.length){el.innerHTML='<div class="empty">No products found. Try another search.</div>';return}
+ el.innerHTML=filtered.map(p=>`<article class="product"><div class="product-art" aria-hidden="true">${p.emoji}</div><div class="product-body"><span class="product-category">${p.category}</span><h3>${p.name}</h3><p class="desc">${p.desc}</p><div class="price-row"><span class="price">${money(p.price)}</span><button class="add" onclick="addToCart(${p.id})">+ Add</button></div></div></article>`).join("");
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();showToast("Added to your cart");}
+function renderCart(){
+ const count=Object.values(cart).reduce((a,b)=>a+b,0);document.getElementById("cartCount").textContent=count;
+ const entries=items.filter(p=>cart[p.id]);
+ document.getElementById("cartItems").innerHTML=entries.length?entries.map(p=>`<div class="cart-line"><span>${p.emoji} ${p.name} × ${cart[p.id]}</span><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):'<p class="desc">Your cart is empty.</p>';
+ document.getElementById("cartTotal").textContent=money(entries.reduce((s,p)=>s+p.price*cart[p.id],0));
+}
+let toastTimer;function showToast(message){const t=document.getElementById("toast");t.textContent=message;t.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display="none",2200)}
+document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();query=document.getElementById("searchInput").value.trim();renderProducts();document.getElementById("shop").scrollIntoView({behavior:"smooth"});});
+document.getElementById("categories").addEventListener("click",e=>{const b=e.target.closest("button[data-category]");if(!b)return;activeCategory=b.dataset.category;document.querySelectorAll(".category").forEach(x=>x.classList.toggle("active",x===b));renderProducts();});
+document.getElementById("cartButton").addEventListener("click",()=>{const p=document.getElementById("cartPanel");const open=p.style.display==="block";p.style.display=open?"none":"block";document.getElementById("cartButton").setAttribute("aria-expanded",String(!open));});
+document.getElementById("checkoutButton").addEventListener("click",()=>showToast("Demo only — connect checkout and payment before launch."));
+renderProducts();renderCart();
+</script>
+</body>
+</html>
